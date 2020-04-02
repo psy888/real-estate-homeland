@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @Column(name = "property_id")
+    @JoinColumn(name = "property_id")
     @ManyToOne
     private Property property;
 
@@ -28,7 +28,7 @@ public class Order {
     @Column(name = "rent_end")
     private LocalDateTime rentEndDate;
 
-    @Column(name = "customer_id")
+    @JoinColumn(name = "customer_id")
     @ManyToOne
     private UserEntity customer;
 

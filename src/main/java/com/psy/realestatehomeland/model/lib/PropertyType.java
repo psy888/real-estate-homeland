@@ -1,5 +1,13 @@
 package com.psy.realestatehomeland.model.lib;
 
+//public enum PropertyType {
+//    HOUSE,
+//    TOWNHOUSE,
+//    APARTMENT,
+//
+
+//}
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +22,11 @@ public class PropertyType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name")
-    private String type;
+    @Column(name = "p_type")
+    private String type;  //living / commercial
+
+    @Column(name = "p_sub_type")
+    private String subType; // warehouse / room / etc.
+
 
 }

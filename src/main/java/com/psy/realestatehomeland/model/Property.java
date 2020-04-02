@@ -1,14 +1,13 @@
 package com.psy.realestatehomeland.model;
 
-import com.psy.realestatehomeland.model.lib.City;
-import com.psy.realestatehomeland.model.lib.PriceType;
-import com.psy.realestatehomeland.model.lib.PropertyAction;
-import com.psy.realestatehomeland.model.lib.PropertyType;
+import com.psy.realestatehomeland.model.lib.*;
 import com.psy.realestatehomeland.model.user.UserEntity;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -21,16 +20,20 @@ public class Property {
     @GenericGenerator(name = "uuid2gen", strategy = "uuid2")
     private String id;
 
-    @Column(name = "type_id")
+
+//    @NotNull
+    @JoinColumn(name = "type_id")
     @ManyToOne
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private PropertyType propertyType;
 
-    @Column(name = "action_id")
+//    @NotNull
+    @JoinColumn(name = "action_type")
     @ManyToOne
     private PropertyAction propertyAction;
 
     @Column(name = "area")
-    private Double area;
+    private Integer area;
 
     @Column(name = "bathroom_number")
     private Integer bathroomCnt;
@@ -42,19 +45,25 @@ public class Property {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "price_type_id")
+    @Column(name = "rental_price_type")
+    private RentalPriceTerm priceType;
+
+//    @NotNull
+    @JoinColumn(name = "price_currency_id")
     @ManyToOne
-    private PriceType priceType;
+    private Currency currency;
 
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "city_id")
+//    @NotNull
+    @JoinColumn(name = "city_id")
     @ManyToOne
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private City city;
 
-    @Column(name = "agent_id")
+    @JoinColumn(name = "agent_id")
     @ManyToOne
     private UserEntity agent;
 

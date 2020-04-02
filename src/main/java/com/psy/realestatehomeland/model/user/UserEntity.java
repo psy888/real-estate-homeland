@@ -16,6 +16,7 @@ public class UserEntity implements User {
     @GeneratedValue(generator = "uuid2userGen" )
     @GenericGenerator(name = "uuid2userGen", strategy = "uuid2")
     private String id;
+
     @NotNull
     @Column(name = "first_name")
     private String firstName;
@@ -27,7 +28,7 @@ public class UserEntity implements User {
     private String email;
 
     @NotNull
-    @Column(name = "phone")
+    @Column(name = "phone_number")
     private String phone;
 
     @NotNull

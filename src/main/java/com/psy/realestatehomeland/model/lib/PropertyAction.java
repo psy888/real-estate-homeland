@@ -1,12 +1,13 @@
 package com.psy.realestatehomeland.model.lib;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "price_action", schema = "sc")
+@Table(name = "property_action", schema = "sc")
 public class PropertyAction {
 
     @Id
