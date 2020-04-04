@@ -1,18 +1,19 @@
 package com.psy.realestatehomeland.repository;
 
 import com.psy.realestatehomeland.model.Property;
-import com.psy.realestatehomeland.model.lib.City;
 import com.psy.realestatehomeland.model.lib.PropertyType;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
-
+@Slf4j
 public class PropertyRepositoryTest {
 
     @Autowired
@@ -24,11 +25,9 @@ public class PropertyRepositoryTest {
         prop1.setArea(285);
         prop1.setBathroomCnt(2);
         prop1.setBedroomCnt(3);
-        City c = new City();
-        c.setName("Zp");
         PropertyType pt = new PropertyType();
         pt.setType("Commercial");
-        prop1.setCity(c);
+        prop1.setCity("Zp");
         prop1.setPropertyType(pt);
 
 
@@ -38,9 +37,7 @@ public class PropertyRepositoryTest {
         prop2.setArea(185);
         prop2.setBathroomCnt(1);
         prop2.setBedroomCnt(1);
-        City c2 = new City();
-        c2.setName("Dp");
-        prop2.setCity(c2);
+        prop2.setCity("Dp");
         PropertyType pt2 = new PropertyType();
         pt.setType("Living");
         prop2.setPropertyType(pt2);
@@ -81,14 +78,16 @@ public class PropertyRepositoryTest {
     }
 
     @Test
-    public void twoArgsQuery() {
-        List<Property> list = repository.findAllWith2Params(2,
-                null);
-        Assertions.assertEquals(285, list.get(0).getArea());
-
-        List<Property> list2 = repository.findAllWith2Params(1,
-                null);
-
-        Assertions.assertEquals(185, list2.get(0).getArea());
+    public void cityQuery() {
+        List<String[]> list = repository.findAllCities();
+//        Map<String,Integer> list = repository.findAllCities();
+        list.forEach(strings -> log.warn(strings.length + "  -  " + Arrays.toString(strings)));
+        log.warn(list.toString());
+//        Assertions.assertEquals(285, list.get(0).getArea());
+//
+//        List<Property> list2 = repository.findAllWith2Params(1,
+//                null);
+//
+//        Assertions.assertEquals(185, list2.get(0).getArea());
     }
 }
