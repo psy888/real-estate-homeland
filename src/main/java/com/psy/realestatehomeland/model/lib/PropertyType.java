@@ -1,12 +1,18 @@
 package com.psy.realestatehomeland.model.lib;
 
-//public enum PropertyType {
-//    HOUSE,
-//    TOWNHOUSE,
-//    APARTMENT,
-//
+/*
+*   public enum Commercial{
+        RETAIL,
+        OFFICE,
+        WAREHOUSE
+    }
 
-//}
+    public enum Living{
+        HOUSE,
+        APARTMENT,
+        ROOM
+    }
+* */
 
 import lombok.Data;
 
