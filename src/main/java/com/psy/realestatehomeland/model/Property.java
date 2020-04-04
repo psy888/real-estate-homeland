@@ -67,6 +67,9 @@ public class Property {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "description")
+    private String description;
+
     @JoinColumn(name = "agent_id")
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @ManyToOne
@@ -83,7 +86,6 @@ public class Property {
 //    private List<Photo> photoList;
 
     @OneToOne
-
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Photo mainPhoto;
 

@@ -1,130 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Homeland &mdash; Colorlib Website Template</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/mediaelementplayer.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-    <link rel="stylesheet" href="css/fl-bigmug-line.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/style.css">
-
-</head>
+<head th:replace="_head"></head>
 <body>
 
 <div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_top-nav"></div>
 
-<div th:replace="_site-wrap"></div>
-
-<div class="site-section site-section-sm bg-info ">
     <div class="site-section site-section-sm bg-info ">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="card bg-light">
-                    <article class="card-body mx-auto" style="max-width: 400px;">
-                        <h4 class="card-title mt-3 text-center">Create Account</h4>
-                        <p class="divider-text">
-                            <span class="bg-light"></span>
-                        </p>
-                        <form th:action="@{/register}" th:object="${user}" method="post">
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                                </div>
-                                <input th:field="*{firstName}" class="form-control" placeholder="First name"
-                                       type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                                </div>
-                                <input th:field="*{lastName}" class="form-control" placeholder="Last name" type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                                </div>
-                                <input th:field="*{email}" class="form-control" placeholder="Email address"
-                                       type="email">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                                </div>
-                                <input th:field="*{phone}" class="form-control" placeholder="Phone number" type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                                </div>
-                                <select th:field="*{role}" class="form-control">
-                                    <option th:value="'ADMINISTRATOR'" th:text="Administrator"></option>
-                                    <option th:value="'AGENT'" th:text="Agent"></option>
-                                    <option th:value="'CLIENT'" th:text="Client"></option>
-                                </select>
-                            </div> <!-- form-group end.// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                                </div>
+        <div class="site-section site-section-sm bg-info ">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="card bg-light">
+                        <article class="card-body mx-auto" style="max-width: 400px;">
+                            <h4 class="card-title mt-3 text-center">Create Account</h4>
+                            <p class="divider-text">
+                                <span class="bg-light"></span>
+                            </p>
+                            <form th:action="@{/register}" th:object="${user}" method="post">
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input th:field="*{firstName}" class="form-control" placeholder="First name"
+                                           type="text">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input th:field="*{lastName}" class="form-control" placeholder="Last name"
+                                           type="text">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                                    </div>
+                                    <input th:field="*{email}" class="form-control" placeholder="Email address"
+                                           type="email">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                                    </div>
+                                    <input th:field="*{phone}" class="form-control" placeholder="Phone number"
+                                           type="text">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                                    </div>
+                                    <select th:field="*{role}" class="form-control">
+                                        <option th:value="'ADMINISTRATOR'" th:text="Administrator"></option>
+                                        <option th:value="'AGENT'" th:text="Agent"></option>
+                                        <option th:value="'CLIENT'" th:text="Client"></option>
+                                    </select>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
 
-                                <input th:field="*{password}" class="form-control" placeholder="Create password"
-                                       type="password">
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <p class="text-center"> Have an account? <a th:href="@{/login}">Log In</a></p>
-                            </div>
-                        </form>
+                                    <input th:field="*{password}" class="form-control" placeholder="Create password"
+                                           type="password">
+                                </div> <!-- form-group// -->
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                                </div> <!-- form-group// -->
+                                <div class="form-group">
+                                    <p class="text-center"> Have an account? <a th:href="@{/login}">Log In</a></p>
+                                </div>
+                            </form>
 
-                        <p class="divider-text">
-                            <span class="bg-light"></span>
-                        </p>
+                            <p class="divider-text">
+                                <span class="bg-light"></span>
+                            </p>
 
-                    </article>
-                </div> <!-- card.// -->
+                        </article>
+                    </div> <!-- card.// -->
+                </div>
             </div>
         </div>
     </div>
+
+    <footer th:replace="_footer"></footer>
 </div>
+<div th:include="_scripts"></div>
 
-<footer th:replace="_footer"></footer>
-
-
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-migrate-3.0.1.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/mediaelement-and-player.min.js"></script>
-<script src="js/jquery.stellar.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/aos.js"></script>
-<script src="js/circleaudioplayer.js"></script>
-
-<script src="js/main.js"></script>
 
 </body>
 </html>
