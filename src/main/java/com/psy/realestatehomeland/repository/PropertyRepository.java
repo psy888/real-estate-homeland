@@ -40,6 +40,11 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
                                      @Param("priceTo") Integer priceTo
     );
 
+    @Query("SELECT p,pt FROM Property p JOIN FETCH p.propertyType pt WHERE (:type is null or pt.type = :type) " +
+            "AND (:action is null or p.propertyAction = :action) " +
+            "AND (:city is null or p.city = :city)")
+    List<Property> findAllByPropertyTypeAndPropertyActionAndCity(String type, String action, String city);
+
     /**
      * all featured properties
      * @return list of properties

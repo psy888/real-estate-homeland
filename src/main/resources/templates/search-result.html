@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head"></head>
+<body>
+
+<div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_top-nav"></div>
+
+    <div class="slide-one-item home-slider owl-carousel"></div>
+
+    <div class="site-section site-section-sm pb-0 site-section-title">
+        <div class="container">
+            <div class="row">
+                <form th:replace="_search-form"></form>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="view-options bg-white py-3 px-3 d-md-flex align-items-center">
+                        <div class="mr-auto">
+                            <a th:href="@{/(viewType = '0')}" class="icon-view view-module" th:classappend="(${view_type} == '0')? 'active': ''">
+                                <span class="icon-view_module"></span>
+                            </a>
+                            <a th:href="@{/(viewType = '1')}" class="icon-view view-list"  th:classappend="(${view_type} == '1')? 'active': ''">
+                                <span class="icon-view_list"></span>
+                            </a>
+
+                        </div>
+                        <div class="ml-auto d-flex align-items-center">
+                            <div>
+                                <a href="#" class="view-list px-3 border-right active">All</a>
+                                <a href="#" class="view-list px-3 border-right">Rent</a>
+                                <a href="#" class="view-list px-3">Sale</a>
+                            </div>
+
+
+                            <div class="select-wrap">
+                                <span class="icon icon-arrow_drop_down"></span>
+                                <select class="form-control form-control-sm d-block rounded-0">
+                                    <option value="">Sort by</option>
+                                    <option value="">Price Ascending</option>
+                                    <option value="">Price Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="site-section site-section-sm bg-light">
+        <div class="container">
+            <div th:switch="${view_type}">
+                <div th:case="'0'">
+                    <div th:replace="_property-grid"></div>
+                </div>
+                <div th:case="'1'">
+                    <div th:replace="_property-list"></div>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="site-pagination">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <span>...</span>
+                        <a href="#">10</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <footer th:replace="_footer"></footer>
+</div>
+
+<div th:replace="_scripts"></div>
+
+
+</body>
+</html>

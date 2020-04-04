@@ -15,7 +15,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
+
+        model.addAttribute("title", "Login");
 
         return "login";
     }
@@ -24,6 +26,7 @@ public class UserController {
     public String register(Model model){
 
         model.addAttribute("user", new UserEntity());
+        model.addAttribute("title", "Register");
 
         return "register";
     }

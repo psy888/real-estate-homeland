@@ -25,18 +25,11 @@ public class PropertyService {
         return repository.findById(id).orElse(new Property()); //???
     }
 
-    public List<Property> searchProperty(SearchQueryParams params){
-        return repository.findAllWithParams(params.getType(),
-                params.getSubtype(),
-                params.getAction(),
-                params.getCity(),
-                params.getAddress(),
-                params.getAreaFrom(),
-                params.getAreaTo(),
-                params.getBath(),
-                params.getBed(),
-                params.getPriceF(),
-                params.getPriceTo());
+    public List<Property> searchProperty(String type, String action, String city){
+        return repository.findAllByPropertyTypeAndPropertyActionAndCity(
+                ((type.isEmpty())?null:type),
+                ((action.isEmpty())?null:action),
+                ((city.isEmpty())?null:city));
     }
 
 
