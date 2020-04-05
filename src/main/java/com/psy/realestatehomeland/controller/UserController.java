@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -15,16 +17,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String login(Model model){
-
+    public String login(Model model, Principal principal){
+        if(principal!=null){
+            model.addAttribute("msg", "Already logged in!");
+            return "403Page";
+        }
         model.addAttribute("title", "Login");
 
         return "login";
     }
 
     @GetMapping("/register")
-    public String register(Model model){
-
+    public String register(Model model, Principal principal){
+        if(principal!=null){
+            model.addAttribute("msg", "Already logged in!");
+            return "403Page";
+        }
         model.addAttribute("user", new UserEntity());
         model.addAttribute("title", "Register");
 
@@ -36,7 +44,9 @@ public class UserController {
 
         userService.createUser(user);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
+
+
 
 }

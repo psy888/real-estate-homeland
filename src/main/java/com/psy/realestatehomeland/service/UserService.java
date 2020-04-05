@@ -34,4 +34,8 @@ public class UserService {
         userRepository.save(user);
         userRoleRepository.save(ur);
     }
+
+    public UserEntity findUserByEmail(String email) {
+        return userRepository.getUserEntityByEmail(email).orElse(null);
+    }
 }

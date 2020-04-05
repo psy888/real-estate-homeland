@@ -66,12 +66,13 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
     List<String[]> findAllPropertyTypes();
 
 
+    List<Property> findAllByAgent_Email(String email);
 
     /**
      *  Featured List
      * @return Top 10 featured
      */
-    List<Property> findTop10ByIsFeaturedTrue();
+    List<Property> findTop9ByIsFeaturedTrue();
 
    //todo query min and max values by (price,area)
 

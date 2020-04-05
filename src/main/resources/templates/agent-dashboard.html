@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head"></head>
+<body>
+
+<div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_agent-top-nav"></div>
+
+
+    <div class="site-section site-section-sm bg-dark pb-0 ">
+        <div class="site-section site-section-title pb-1 ">
+        </div>
+    </div>
+    <div class="site-section site-section-sm pb-0">
+
+                <div class="container">
+                    <h2 th:if="${property eq null}" class="m-2">You have no ads yet!</h2>
+                    <div th:if="${property ne null}"  class="row justify-content-center">
+                        <h2 class="m-6">List of clients</h2>
+                        <table class="table text-left">
+                            <thead class="thead-light col-6">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Action type</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Photo count</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="p, iter : ${property}">
+                                <td th:text="${iter.count}"></td>
+                                <td th:text="${p.propertyType.type}"></td>
+                                <td th:text="${p.propertyAction}"></td>
+                                <td th:text="${p.city}"></td>
+                                <td th:text="${p.address}"></td>
+                                <td th:text="${p.city + ' photo'}"></td> <!-- TODO fix foto cnt -->
+                                <td><a th:href="@{/edit/{id} (id=${p.id})}">Edit</a></td>
+                                <td><a th:href="@{/delete/{id} (id=${p.id})}">Delete</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row justify-content-between">
+                        <a  th:href="@{/addAd}" class="btn btn-primary"> + Add property AD.</a>
+                    </div>
+                </div>
+
+    </div>
+
+
+
+
+
+
+    <footer th:replace="_footer"></footer>
+</div>
+
+<div th:replace="_scripts"></div>
+
+
+</body>
+</html>

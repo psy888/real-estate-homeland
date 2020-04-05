@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head"></head>
+<body class="text-center">
+
+<div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_agent-top-nav"></div>
+
+    <div class="site-section site-section-sm bg-dark pb-0 ">
+        <div class="site-section site-section-title pb-1 ">
+        </div>
+    </div>
+
+    <div class="site-section site-section-sm pb-2">
+
+        <div class="container">
+            <h2 class="m-6">New Property Information</h2>
+            <div class="row justify-content-center">
+                <form action="#" th:action="@{/addAd}" th:object="${newProperty}" method="post" class="form col-6">
+                    <div>
+                        <!--Type-->
+                        <div class="form-group text-left">
+                            <label for="type">Type</label>
+                            <input type="text" class="form-control" id="type" placeholder="Property type"
+                                   th:field="*{propertyType}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('propertyType')}"
+                                  th:errors="*{propertyType}"></span>
+                        </div>
+                        <!--Action-->
+                        <div class="form-group text-justify">
+                            <input type="radio" id="rent" value="rent" th:selected="selected" th:field="*{propertyAction}">
+                            <label for="rent">Property for Rent</label>
+                            <input type="radio" id="sell" value="sell" th:field="*{propertyAction}">
+                            <label for="rent">Property for Sell</label>
+                        </div>
+                        <!--Property Address-->
+                        <div class="form-group text-left">
+                            <label for="city">Address</label>
+                            <!--City-->
+                            <input type="text" class="form-control" id="city" placeholder="City" th:field="*{city}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('city')}"
+                                  th:errors="*{city}"></span>
+                            <!--Address-->
+                            <input type="text" class="form-control" id="address" placeholder="Address"
+                                   th:field="*{address}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('city')}"
+                                  th:errors="*{address}"></span>
+                        </div>
+
+
+                        <!--Price-->
+                        <div class="form-group text-left">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" placeholder="Price" th:field="*{price}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('price')}"
+                                  th:errors="*{price}"></span>
+                            <label for="currency">Currency</label>
+                            <select id="currency" class="form-control" th:field="*{currencyCode}">
+                                <option value="USD" th:selected="selected">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="UHY">UHY</option>
+                            </select>
+                        </div>
+
+
+                        <div>
+                            <input type="submit" value="Add" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <footer th:replace="_footer"></footer>
+</div>
+
+<div th:replace="_scripts"></div>
+
+
+</body>
+</html>

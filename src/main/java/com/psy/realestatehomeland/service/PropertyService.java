@@ -13,23 +13,27 @@ public class PropertyService {
 
     private final PropertyRepository repository;
 
-    public List<String[]> getCitiesWithCnt(){
+    public List<String[]> getCitiesWithCnt() {
         return repository.findAllCities();
     }
 
-    public List<String[]> getPropertyTypes(){
+    public List<String[]> getPropertyTypes() {
         return repository.findAllPropertyTypes();
     }
 
-    public Property getPropertyById(String id){
+    public Property getPropertyById(String id) {
         return repository.findById(id).orElse(new Property()); //???
     }
 
-    public List<Property> searchProperty(String type, String action, String city){
+    public List<Property> getPropertyByAgent(String email) {
+        return repository.findAllByAgent_Email(email);
+    }
+
+    public List<Property> searchProperty(String type, String action, String city) {
         return repository.findAllByPropertyTypeAndPropertyActionAndCity(
-                ((type.isEmpty())?null:type),
-                ((action.isEmpty())?null:action),
-                ((city.isEmpty())?null:city));
+                ((type.isEmpty()) ? null : type),
+                ((action.isEmpty()) ? null : action),
+                ((city.isEmpty()) ? null : city));
     }
 
 
@@ -37,9 +41,12 @@ public class PropertyService {
         return repository.findTop5ByIsPromotedTrue();
     }
 
-    public List<Property> getFeatured(){
-        return repository.findAllByIsFeaturedTrue();
+    public List<Property> getFeatured() {
+        return repository.findTop9ByIsFeaturedTrue();
     }
 
 
+    public Property addNewProperty(Property property) {
+        return repository.save(property);
+    }
 }
