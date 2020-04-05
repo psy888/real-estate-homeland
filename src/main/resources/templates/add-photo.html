@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head"></head>
+<body>
+
+<div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_agent-top-nav"></div>
+
+
+    <div class="site-section site-section-sm bg-dark pb-0 ">
+        <div class="site-section site-section-title pb-1 ">
+        </div>
+    </div>
+    <div class="site-section site-section-sm pb-2">
+
+        <div class="container">
+            <h2 class="m-6" th:text="'Upload photos to property id:'  + ${property.id}"></h2>
+            <div class="row justify-content-center">
+                <form action="#" th:action="@{/uploadPhotos{id} (id=${property.id})}" th:object="${list}" method="post" class="form col-6">
+                    <div>
+                        <div class="form-group text-left">
+                            <div th:each="f ,iter: ${list}">
+                                <label th:if="${iter}==0" th:for="'f'+ ${iter}" th:text="'Main Photo'"></label>
+                                <label th:if="${iter}!=0" th:for="'f'+ ${iter}" th:text="'Photo#' + ${iter}"></label>
+
+                                <input type="file" th:id="'f'+ ${iter}" th:name="'file'+${iter}" th:value="${list[${iter}]}"/>
+
+<!--                                                            <span class="invalid-feedback" th:if="${#fields.hasErrors(${list[${iter}]})}"-->
+<!--                                                                  th:errors="*{f}"></span>-->
+
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <input type="submit" value="Upload all" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+        <footer th:replace="_footer"></footer>
+    </div>
+
+    <div th:replace="_scripts"></div>
+
+
+    </body>
+    </html>

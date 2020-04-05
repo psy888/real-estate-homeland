@@ -29,10 +29,17 @@
                         </div>
                         <!--Action-->
                         <div class="form-group text-justify">
-                            <input type="radio" id="rent" value="rent" th:selected="selected" th:field="*{propertyAction}">
+                            <input type="radio" id="rent" value="rent" checked th:field="*{propertyAction}">
                             <label for="rent">Property for Rent</label>
                             <input type="radio" id="sell" value="sell" th:field="*{propertyAction}">
                             <label for="rent">Property for Sell</label>
+                        </div>
+                        <!--Featured/Promoted-->
+                        <div class="form-group text-justify">
+                            <input type="checkbox" id="featured" value="true"  th:field="*{isFeatured}">
+                            <label for="featured">Featured AD</label>
+                            <input type="checkbox" id="promoted" value="true" th:field="*{isPromoted}">
+                            <label for="promoted">Promoted AD</label>
                         </div>
                         <!--Property Address-->
                         <div class="form-group text-left">

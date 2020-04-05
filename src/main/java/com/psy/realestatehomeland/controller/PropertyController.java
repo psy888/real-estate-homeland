@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
 public class PropertyController {
 
     private final PropertyService propertyService;
-    private final StorageService storageService;
     private final UserService userService;
+    private final StorageService storageService;
 
     @GetMapping("/")
     public String startPage(@RequestParam(defaultValue = "0", required = false) String viewType, Model model, Principal principal) {
@@ -79,8 +80,10 @@ public class PropertyController {
     @GetMapping("/myAd/{email}")
     public String agentAds(@PathVariable String email, Model model, Principal principal) {
         if (!principal.getName().contentEquals(email)) {
+            //todo check role!!!!!!!!!!!!!!
             return "403";
         }
+
         model.addAttribute("property", propertyService.getPropertyByAgent(principal.getName()));
 
         setTitle(model, "Agent's Dashboard");
@@ -103,13 +106,21 @@ public class PropertyController {
 
 
     @PostMapping("/addAd")
-    public String handleFileUpload(@RequestParam("property") Property property, Model model, Principal principal) {
+    public String addProperty(Property property, Model model, Principal principal) {
         property.setAgent(userService.findUserByEmail(principal.getName()));
         propertyService.addNewProperty(property);
-        model.addAttribute(property);
+        model.addAttribute("property", property);
+        model.addAttribute("list", new MultipartFile[10]);
+        setTitle(model, "Add Property Photos");
+        setUserEmail(model, principal);
         return "add-photo";
     }
 
+    @PostMapping("/uploadPhotos")
+    public String uploadPhotos(@RequestParam("id") String id, @RequestParam("list") MultipartFile[] list, Model model, Principal principal) {
+        storageService.storeAll(list, propertyService.findById(id));
+        return "redirect:/myAd/" + principal.getName();
+    }
 
 
     private void fillSearchForm(Model model) {

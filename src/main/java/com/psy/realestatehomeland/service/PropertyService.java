@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,10 @@ public class PropertyService {
 
     public List<Property> getFeatured() {
         return repository.findTop9ByIsFeaturedTrue();
+    }
+
+    public Property findById(String id){
+        return repository.findById(id).orElse(null); //todo replace to throw
     }
 
 
