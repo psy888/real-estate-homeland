@@ -2,11 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="_head"></head>
 <body>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <div class="site-loader"></div>
 <div class="site-wrap">
     <div th:replace="/_top-nav"></div>
-
+    <style type="text/css">
+        .divider-text {
+            position: relative;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .divider-text span {
+            padding: 7px;
+            font-size: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        .divider-text:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            top: 55%;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
     <div class="site-section site-section-sm bg-info ">
         <div class="site-section site-section-sm bg-info ">
             <div class="container">

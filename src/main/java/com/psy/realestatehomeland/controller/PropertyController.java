@@ -117,8 +117,8 @@ public class PropertyController {
     }
 
     @PostMapping("/uploadPhotos")
-    public String uploadPhotos(@RequestParam("id") String id, @RequestParam("list") MultipartFile[] list, Model model, Principal principal) {
-        storageService.storeAll(list, propertyService.findById(id));
+    public String uploadPhotos(@RequestParam("id") String id, @RequestParam("file") MultipartFile file, Model model, Principal principal) {
+        storageService.store(file, propertyService.findById(id),true);
         return "redirect:/myAd/" + principal.getName();
     }
 

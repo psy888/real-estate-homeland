@@ -35,7 +35,7 @@
                             <tbody>
                             <tr th:each="p, iter : ${property}">
                                 <td th:text="${iter.count}"></td>
-                                <td th:text="${p.propertyType.type}"></td>
+                                <td th:text="${p.propertyType}"></td>
                                 <td th:text="${p.propertyAction}"></td>
                                 <td th:text="${p.city}"></td>
                                 <td th:text="${p.address}"></td>

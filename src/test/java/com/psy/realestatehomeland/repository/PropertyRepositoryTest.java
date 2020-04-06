@@ -25,10 +25,8 @@ public class PropertyRepositoryTest {
         prop1.setArea(285);
         prop1.setBathroomCnt(2);
         prop1.setBedroomCnt(3);
-        PropertyType pt = new PropertyType();
-        pt.setType("Commercial");
         prop1.setCity("Zp");
-        prop1.setPropertyType(pt);
+        prop1.setPropertyType("Commercial");
 
 
         repository.save(prop1);
@@ -38,9 +36,7 @@ public class PropertyRepositoryTest {
         prop2.setBathroomCnt(1);
         prop2.setBedroomCnt(1);
         prop2.setCity("Dp");
-        PropertyType pt2 = new PropertyType();
-        pt.setType("Living");
-        prop2.setPropertyType(pt2);
+        prop2.setPropertyType("Living");
         repository.save(prop2);
 
     }
@@ -57,13 +53,11 @@ public class PropertyRepositoryTest {
                 null,
                 2,
                 null,
-                null,
                 null);
 
         Assertions.assertEquals(285, list.get(0).getArea());
 
         List<Property> list2 = repository.findAllWithParams(null,
-                null,
                 null,
                 null,
                 null,

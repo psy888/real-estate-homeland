@@ -39,24 +39,23 @@ public class RealEstateHomelandApplication {
             appRoleRepository.save(agent);
             appRoleRepository.save(client);
 
-            for (int i = 0; i < 15; i++) {
-                PropertyType pt = new PropertyType();
-                pt.setType((i%2==0)?"commercial":"living");
-                Property p = new Property();
-                p.setPropertyType(pt);
-                p.setBedroomCnt(2);
-                p.setBathroomCnt(2);
-                p.setArea(105 + i);
-                p.setAddress("Address St. " + (int)(Math.random() * 100 + 1) + i);
-                p.setCity(((i%2==0)?"London":"Paris"));
-                p.setPrice(125000.0 + 1000*i);
-                p.setCurrencyCode("USD");
-                p.setIsPromoted((i<3)?Boolean.TRUE:Boolean.FALSE);
-                p.setIsFeatured((i>3)?Boolean.TRUE:Boolean.FALSE);
-                Photo photo = new Photo();
-                p.setMainPhoto(photo);
-                repository.save(p);
-            }
+//            for (int i = 0; i < 6; i++) {
+//
+//                Property p = new Property();
+//                p.setPropertyType((i%2==0)?"commercial":"living");
+//                p.setBedroomCnt(2);
+//                p.setBathroomCnt(2);
+//                p.setArea(105 + i);
+//                p.setAddress("Address St. " + (int)(Math.random() * 100 + 1) + i);
+//                p.setCity(((i%2==0)?"London":"Paris"));
+//                p.setPrice(125000.0 + 1000*i);
+//                p.setCurrencyCode("USD");
+//                p.setIsPromoted((i<1)?Boolean.TRUE:Boolean.FALSE);
+//                p.setIsFeatured((i>3)?Boolean.TRUE:Boolean.FALSE);
+//                Photo photo = new Photo();
+//                p.setMainPhoto(photo);
+//                repository.save(p);
+//            }
 
         };
     }

@@ -17,38 +17,43 @@
         <div class="container">
             <h2 class="m-6" th:text="'Upload photos to property id:'  + ${property.id}"></h2>
             <div class="row justify-content-center">
-                <form action="#" th:action="@{/uploadPhotos{id} (id=${property.id})}" th:object="${list}" method="post" class="form col-6">
+                <form action="#" th:action="@{/uploadPhotos(id=${property.id})}"  method="POST"
+                      enctype="multipart/form-data" class="form col-6">
                     <div>
                         <div class="form-group text-left">
-                            <div th:each="f ,iter: ${list}">
-                                <label th:if="${iter}==0" th:for="'f'+ ${iter}" th:text="'Main Photo'"></label>
-                                <label th:if="${iter}!=0" th:for="'f'+ ${iter}" th:text="'Photo#' + ${iter}"></label>
+<!--                            <div th:each="f ,stat: ${list}">-->
+<!--                                <label th:if="${stat.index}==0" th:for="'f'+ ${stat.index}" th:text="'Main Photo'"></label>-->
+<!--                                <label th:if="${stat.index}!=0" th:for="'f'+ ${stat.index}" th:text="'Photo#' + ${stat.index}"></label>-->
 
-                                <input type="file" th:id="'f'+ ${iter}" th:name="'file'+${iter}" th:value="${list[${iter}]}"/>
-
-<!--                                                            <span class="invalid-feedback" th:if="${#fields.hasErrors(${list[${iter}]})}"-->
-<!--                                                                  th:errors="*{f}"></span>-->
-
-                                </div>
-                            </div>
+<!--                                <input type="file" th:id="'f'+ ${stat.index}" th:name="'file'+${stat.index}"-->
+<!--                                       th:value="*{list[__${stat.index}__]}"/>-->
+                                <input type="file" name="file" />
 
 
-                            <div>
-                                <input type="submit" value="Upload all" class="btn btn-primary">
-                            </div>
+
+                                <!--                                                            <span class="invalid-feedback" th:if="${#fields.hasErrors(${list[${iter}]})}"-->
+                                <!--                                                                  th:errors="*{f}"></span>-->
+
+<!--                            </div>-->
                         </div>
-                    </form>
-                </div>
-            </div>
 
+
+                        <div>
+                            <input type="submit" value="Upload all" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
-
-        <footer th:replace="_footer"></footer>
     </div>
 
-    <div th:replace="_scripts"></div>
+
+    <footer th:replace="_footer"></footer>
+</div>
+
+<div th:replace="_scripts"></div>
 
 
-    </body>
-    </html>
+</body>
+</html>

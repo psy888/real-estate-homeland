@@ -24,8 +24,9 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class StorageService {
 
-    private final Path rootLocation = Paths.get("/images/property");
+    private final Path rootLocation = Paths.get("src/main/resources/static/images/property/");
     private final PhotoService photoService;
+    private final PropertyService propertyService;
 
     /**
      * get file name from Photo.id field
@@ -36,8 +37,14 @@ public class StorageService {
      * @param isMain
      */
     public void store(MultipartFile file, Property property, boolean isMain) {
+
         Photo photo = photoService.addNewPhoto();
+        photo.setExtension(getExtension(file));
+        photo.setIsMain(isMain);
+        photo.setProperty(property);
         try {
+
+
             if (!isRightExtension(file)) {
                 throw new StorageException("Wrong file type  " + file.getName());
             }
@@ -52,18 +59,22 @@ public class StorageService {
             }
 
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(photo.getFilename()),
+                Files.copy(inputStream, this.rootLocation.resolve(photo.getFilename() + getExtension(file)),
                         StandardCopyOption.REPLACE_EXISTING);
+
             }
+            property.getMainPhoto().add(photo);
+
+
         } catch (IOException ioe) {
             log.warn(ioe.getMessage());
+            photoService.delete(photo);
+        }
+        finally {
+            propertyService.update(property);
         }
 
-        if (isMain) {
-            property.setMainPhoto(photo);
-        } else {
-//            property.photos.add
-        }
+
     }
 
     /**
@@ -87,17 +98,21 @@ public class StorageService {
      * @return
      */
     private boolean isRightExtension(MultipartFile file) {
-        String ext = file.getOriginalFilename().substring(file
-                .getOriginalFilename()
-                .lastIndexOf('.'));
+        String ext = getExtension(file);
         if (isNull(ext)) {
             return false;
         }
         for (String s : PhotoService.PHOTO_EXT) {
-            if (!ext.toLowerCase().contentEquals(s)) {
-                return false;
+            if (ext.toLowerCase().contains(s)) {
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    private String getExtension(MultipartFile file) {
+        return file.getOriginalFilename().substring(file
+                .getOriginalFilename()
+                .lastIndexOf('.'));
     }
 }

@@ -54,4 +54,8 @@ public class PropertyService {
     public Property addNewProperty(Property property) {
         return repository.save(property);
     }
+
+    public void update(Property property) {
+        repository.save(property);
+    }
 }

@@ -3,6 +3,7 @@ package com.psy.realestatehomeland.model;
 import com.psy.realestatehomeland.model.lib.*;
 import com.psy.realestatehomeland.model.user.UserEntity;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,8 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
+    
 @Data
+@ToString(exclude = "mainPhoto")
 @Entity
 @Table(name = "property", schema = "sc")
 public class Property {
@@ -23,11 +25,8 @@ public class Property {
     private String id;
 
 
-//    @NotNull
-    @JoinColumn(name = "type_id")
-    @ManyToOne
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    private PropertyType propertyType;
+    @Column(name = "property_type")
+    private String propertyType;
 
 //    @NotNull
     @Column(name = "action_type")
@@ -46,12 +45,7 @@ public class Property {
     @Column(name = "price")
     private Double price;
 
-    /*
-    * PER_DAY,
-    PER_WEEK,
-    PER_MOTH,
-    PER_YEAR
-    * */
+
     @Column(name = "rental_price_type")
     private Integer priceType;
 
@@ -85,8 +79,8 @@ public class Property {
 //    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
 //    private List<Photo> photoList;
 
-    @OneToOne
+    @OneToMany
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    private Photo mainPhoto;
+    private List<Photo> mainPhoto;
 
 }

@@ -19,4 +19,8 @@ public class PhotoService {
     public Photo addNewPhoto(){
         return repository.save(new Photo());
     }
+
+    public void delete(Photo p){
+        repository.delete(p);
+    }
 }

@@ -45,13 +45,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // The pages does not require login
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+//        http.authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
+//                .mvcMatchers("/resources/static/images/property/*","/images/property/*").permitAll());
 
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/userInfo")
+                .access("hasAnyRole('CLIENT', 'AGENT')");
+//        http.authorizeRequests()
+//                .antMatchers("/addAd/*","/addAd","/myAd/*","/uploadPhotos")
+//                .access("hasRole('AGENT')");
 
         // For ADMIN only.
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMINISTRATOR')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,

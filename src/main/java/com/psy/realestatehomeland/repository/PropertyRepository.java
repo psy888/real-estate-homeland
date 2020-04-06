@@ -18,8 +18,8 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
 
     List<Property> findTop5ByIsPromotedTrue();
 
-    @Query("SELECT p,pt,a FROM Property p JOIN FETCH p.propertyType pt JOIN FETCH p.agent a WHERE " +
-            "(:type is null or pt.type = :type and (:subtype is null or pt.subType = :type)) and " +
+    @Query("SELECT p,a FROM Property p JOIN FETCH p.agent a WHERE " +
+            "(:type is null or  p.propertyType = :type) and " +
             "(:action is null or p.propertyAction = :action) and " +
             "(:city is null or p.city = :city) and " +
             "(:address is null or p.address = :address) and " +
@@ -28,7 +28,6 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
             "(:bed is null or p.bedroomCnt = :bed) and " +
             "((:priceF is null or p.price > :priceF) and (:priceTo is null or p.price < :priceTo))")
     List<Property> findAllWithParams(@Param("type") String type,
-                                     @Param("subtype") String subtype,
                                      @Param("action") String action,
                                      @Param("city") String city,
                                      @Param("address") String address,
@@ -40,7 +39,7 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
                                      @Param("priceTo") Integer priceTo
     );
 
-    @Query("SELECT p,pt FROM Property p JOIN FETCH p.propertyType pt WHERE (:type is null or pt.type = :type) " +
+    @Query("SELECT p FROM Property p WHERE (:type is null or  p.propertyType = :type) " +
             "AND (:action is null or p.propertyAction = :action) " +
             "AND (:city is null or p.city = :city)")
     List<Property> findAllByPropertyTypeAndPropertyActionAndCity(String type, String action, String city);
@@ -62,7 +61,7 @@ public interface PropertyRepository extends CrudRepository<Property, String> {
      * Property types
      * @return [unique value, count of repeats]
      */
-    @Query("SELECT DISTINCT pt.type,  COUNT(pt.type) FROM Property p JOIN p.propertyType pt GROUP BY pt.type")
+    @Query("SELECT DISTINCT p.propertyType,  COUNT( p.propertyType) FROM Property p  GROUP BY  p.propertyType")
     List<String[]> findAllPropertyTypes();
 
 
