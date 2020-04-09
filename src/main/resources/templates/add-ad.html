@@ -56,6 +56,42 @@
                         </div>
 
 
+                        <!--bathroom count-->
+                        <div class="form-group text-left">
+                            <label for="bath">Baths</label>
+                            <input type="number" class="form-control" id="bath" placeholder="Baths"
+                                   th:field="*{bathroomCnt}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('bathroomCnt')}"
+                                  th:errors="*{bathroomCnt}"></span>
+                        </div>
+
+                        <!--bathroom count-->
+                        <div class="form-group text-left">
+                            <label for="bed">Beds</label>
+                            <input type="number" class="form-control" id="bed" placeholder="Beds"
+                                   th:field="*{bedroomCnt}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('bedroomCnt')}"
+                                  th:errors="*{bedroomCnt}"></span>
+                        </div>
+
+                        <!--Area in SQ FT-->
+                        <div class="form-group text-left">
+                            <label for="area">Living area</label>
+                            <input type="number" class="form-control" id="area" placeholder="Area"
+                                   th:field="*{area}">
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('area')}"
+                                  th:errors="*{area}"></span>
+                        </div>
+
+                        <!--Description-->
+                        <div class="form-group text-left">
+                            <label for="description">Living area</label>
+                            <textarea rows="10" type="text" class="form-control" id="description" placeholder="Description"
+                                      th:field="*{description}"></textarea>
+                            <span class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                                  th:errors="*{description}"></span>
+                        </div>
+
                         <!--Price-->
                         <div class="form-group text-left">
                             <label for="price">Price</label>

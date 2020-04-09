@@ -1,11 +1,10 @@
 package com.psy.realestatehomeland;
 
-import com.psy.realestatehomeland.model.Photo;
-import com.psy.realestatehomeland.model.Property;
-import com.psy.realestatehomeland.model.lib.PropertyType;
 import com.psy.realestatehomeland.model.user.AppRole;
+import com.psy.realestatehomeland.model.user.UserEntity;
 import com.psy.realestatehomeland.repository.AppRoleRepository;
-import com.psy.realestatehomeland.repository.PropertyRepository;
+import com.psy.realestatehomeland.repository.UserRepository;
+import com.psy.realestatehomeland.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 @AllArgsConstructor
 public class RealEstateHomelandApplication {
 
-    private PropertyRepository repository;
+    private UserService userService;
     private AppRoleRepository appRoleRepository;
 
     public static void main(String[] args) {
@@ -38,6 +37,16 @@ public class RealEstateHomelandApplication {
             appRoleRepository.save(admin);
             appRoleRepository.save(agent);
             appRoleRepository.save(client);
+
+            UserEntity test = new UserEntity();
+            test.setEmail("psy888@mail.ru");
+            test.setPassword("123");
+            test.setRole(agent.getRoleName());
+            test.setIsEnabled(true);
+            test.setFirstName("Pavel");
+            test.setPhone("123345654");
+            userService.createUser(test);
+
 
 //            for (int i = 0; i < 6; i++) {
 //

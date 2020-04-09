@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Controller
 @RequiredArgsConstructor
 public class PropertyController {
@@ -38,7 +40,7 @@ public class PropertyController {
         model.addAttribute("view_type", viewType);
         setTitle(model, "Home");
 
-        setUserEmail(model, principal);
+        setUserName(model, principal);
 
 
         return "index";
@@ -49,7 +51,7 @@ public class PropertyController {
         model.addAttribute("property", propertyService.getPropertyById(id));
 
         setTitle(model, "Details");
-        setUserEmail(model, principal);
+        setUserName(model, principal);
 
         return "property-details";
     }
@@ -72,7 +74,7 @@ public class PropertyController {
         //list or grid view
         model.addAttribute("view_type", viewType);
 
-        setUserEmail(model, principal);
+        setUserName(model, principal);
 
         return "search-result";
     }
@@ -88,7 +90,7 @@ public class PropertyController {
 
         setTitle(model, "Agent's Dashboard");
 
-        setUserEmail(model, principal);
+        setUserName(model, principal);
 
 
         return "agent-dashboard";
@@ -100,26 +102,40 @@ public class PropertyController {
         model.addAttribute("newProperty", new Property());
 
         setTitle(model, "Add Property AD");
-        setUserEmail(model, principal);
+        setUserName(model, principal);
         return "add-ad";
     }
 
+    @GetMapping("/addimageto")
+    public String addImage(@RequestParam String id, Model model, Principal principal) {
+        int imgCnt = propertyService.findById(id).getMainImage().size();
+        if (imgCnt > 10) {
+            return "redirect:/myAd/" + principal.getName();
+        }
+        model.addAttribute("propertyId", id);
+        model.addAttribute("imageCnt", imgCnt);
 
-    @PostMapping("/addAd")
-    public String addProperty(Property property, Model model, Principal principal) {
-        property.setAgent(userService.findUserByEmail(principal.getName()));
-        propertyService.addNewProperty(property);
-        model.addAttribute("property", property);
-        model.addAttribute("list", new MultipartFile[10]);
+        model.addAttribute("images", propertyService.findById(id).getMainImage());
+
         setTitle(model, "Add Property Photos");
-        setUserEmail(model, principal);
+        setUserName(model, principal);
         return "add-photo";
     }
 
-    @PostMapping("/uploadPhotos")
+    @PostMapping("/addAd")
+    public String addProperty(Property property, Principal principal) {
+        if(isNull(principal)){
+            return "index";
+        }
+        property.setAgent(userService.findUserByEmail(principal.getName()));
+        propertyService.addNewProperty(property);
+        return "redirect:/addimageto?id=" + property.getId();
+    }
+
+    @PostMapping("/upload")
     public String uploadPhotos(@RequestParam("id") String id, @RequestParam("file") MultipartFile file, Model model, Principal principal) {
-        storageService.store(file, propertyService.findById(id),true);
-        return "redirect:/myAd/" + principal.getName();
+        storageService.store(file, propertyService.findById(id));
+        return "redirect:/addimageto?id=" + id;
     }
 
 
@@ -134,7 +150,7 @@ public class PropertyController {
         model.addAttribute("title", title);
     }
 
-    private void setUserEmail(Model model, Principal principal) {
+    private void setUserName(Model model, Principal principal) {
         if (principal != null) {
             model.addAttribute("name", trimEmail(principal.getName()));
         }
@@ -143,4 +159,5 @@ public class PropertyController {
     private String trimEmail(String email) {
         return email.substring(0, email.indexOf("@"));
     }
+
 }

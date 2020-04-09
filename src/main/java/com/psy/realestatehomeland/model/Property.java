@@ -1,19 +1,16 @@
 package com.psy.realestatehomeland.model;
 
-import com.psy.realestatehomeland.model.lib.*;
 import com.psy.realestatehomeland.model.user.UserEntity;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-    
+
 @Data
-@ToString(exclude = "mainPhoto")
+@ToString(exclude = "mainImage")
 @Entity
 @Table(name = "property", schema = "sc")
 public class Property {
@@ -28,7 +25,7 @@ public class Property {
     @Column(name = "property_type")
     private String propertyType;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "action_type")
     private String propertyAction;
 
@@ -49,7 +46,7 @@ public class Property {
     @Column(name = "rental_price_type")
     private Integer priceType;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "currency_code")
     private String currencyCode;
 
@@ -57,7 +54,7 @@ public class Property {
     @Column(name = "address")
     private String address;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "city")
     private String city;
 
@@ -65,7 +62,6 @@ public class Property {
     private String description;
 
     @JoinColumn(name = "agent_id")
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @ManyToOne
     private UserEntity agent;
 
@@ -75,12 +71,8 @@ public class Property {
     @Column(name = "promoted")
     private Boolean isPromoted;
 
-//    @OneToMany
-//    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-//    private List<Photo> photoList;
-
     @OneToMany
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    private List<Photo> mainPhoto;
+    private List<Image> mainImage;
 
 }

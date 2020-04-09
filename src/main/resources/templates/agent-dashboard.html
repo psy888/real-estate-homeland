@@ -27,7 +27,10 @@
                                 <th scope="col">City</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Photo count</th>
+                                <th scope="col">Beds</th>
+                                <th scope="col">Baths</th>
+                                <th scope="col">Area</th>
+
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -39,14 +42,19 @@
                                 <td th:text="${p.propertyAction}"></td>
                                 <td th:text="${p.city}"></td>
                                 <td th:text="${p.address}"></td>
-                                <td th:text="${p.city + ' photo'}"></td> <!-- TODO fix foto cnt -->
+                                <td th:text="${p.price}"></td>
+                                <td th:text="${p.bedroomCnt}"></td>
+                                <td th:text="${p.bathroomCnt}"></td>
+                                <td th:text="${p.area} + ' SQ FT'"></td>
+
+
                                 <td><a th:href="@{/edit/{id} (id=${p.id})}">Edit</a></td>
                                 <td><a th:href="@{/delete/{id} (id=${p.id})}">Delete</a></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between pb-4">
                         <a  th:href="@{/addAd}" class="btn btn-primary"> + Add property AD.</a>
                     </div>
                 </div>

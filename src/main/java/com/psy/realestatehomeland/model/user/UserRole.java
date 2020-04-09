@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "User_Role",
         uniqueConstraints = {
-                @UniqueConstraint(name = "USER_ROLE_UK", columnNames = {"User_Id", "Role_Id"})})
+                @UniqueConstraint(name = "USER_ROLE_UK", columnNames = {"User_Id", "Role_Id"})}, schema = "sc")
 @Data
 @NoArgsConstructor
 public class UserRole {

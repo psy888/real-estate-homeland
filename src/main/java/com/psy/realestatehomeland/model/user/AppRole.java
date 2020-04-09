@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "App_Role",
         uniqueConstraints = {
-                @UniqueConstraint(name = "APP_ROLE_UK", columnNames = "Role_Name")})
+                @UniqueConstraint(name = "APP_ROLE_UK", columnNames = "Role_Name")}, schema = "sc")
 @Data
 @NoArgsConstructor
 public class AppRole {

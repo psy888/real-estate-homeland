@@ -1,6 +1,6 @@
 package com.psy.realestatehomeland.service;
 
-import com.psy.realestatehomeland.model.Photo;
+import com.psy.realestatehomeland.model.Image;
 import com.psy.realestatehomeland.model.Property;
 import com.psy.realestatehomeland.storage.StorageException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -24,8 +25,9 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class StorageService {
 
-    private final Path rootLocation = Paths.get("src/main/resources/static/images/property/");
-    private final PhotoService photoService;
+    //    private final Path rootLocation = Paths.get("src/main/resources/static/images/property/");
+    private final Path rootLocation = Paths.get("/tmp/");
+    private final ImageService imageService;
     private final PropertyService propertyService;
 
     /**
@@ -34,17 +36,17 @@ public class StorageService {
      *
      * @param file
      * @param property
-     * @param isMain
      */
-    public void store(MultipartFile file, Property property, boolean isMain) {
+    public void store(MultipartFile file, Property property) {
+        if (isNull(file)) {
+            throw new StorageException("Error while uploading file.");
+        }
+        Image image = imageService.addNewPhoto();
+        image.setExtension(getExtension(file));
+//        property.getMainImage().add(image);
+//        image.setProperty(property);
 
-        Photo photo = photoService.addNewPhoto();
-        photo.setExtension(getExtension(file));
-        photo.setIsMain(isMain);
-        photo.setProperty(property);
         try {
-
-
             if (!isRightExtension(file)) {
                 throw new StorageException("Wrong file type  " + file.getName());
             }
@@ -59,18 +61,18 @@ public class StorageService {
             }
 
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(photo.getFilename() + getExtension(file)),
+                Files.copy(inputStream, this.rootLocation.resolve(image.getFilename() + getExtension(file)),
                         StandardCopyOption.REPLACE_EXISTING);
 
             }
-            property.getMainPhoto().add(photo);
+            property.getMainImage().add(image);
 
 
         } catch (IOException ioe) {
+            imageService.deleteFromDB(image.getFilename());
             log.warn(ioe.getMessage());
-            photoService.delete(photo);
-        }
-        finally {
+            ioe.printStackTrace();
+        } finally {
             propertyService.update(property);
         }
 
@@ -84,10 +86,10 @@ public class StorageService {
      * @param list
      * @param property
      */
-    public void storeAll(MultipartFile[] list, Property property) {
-        for (int i = 0; i < list.length; i++) {
-            if (nonNull(list[i]))
-                store(list[i], property, i == 0);
+    public void storeAll(ArrayList<MultipartFile> list, Property property) {
+        for (int i = 0; i < list.size(); i++) {
+            if (nonNull(list.get(i)))
+                store(list.get(i), property);
         }
     }
 
@@ -102,7 +104,7 @@ public class StorageService {
         if (isNull(ext)) {
             return false;
         }
-        for (String s : PhotoService.PHOTO_EXT) {
+        for (String s : ImageService.PHOTO_EXT) {
             if (ext.toLowerCase().contains(s)) {
                 return true;
             }
@@ -111,8 +113,18 @@ public class StorageService {
     }
 
     private String getExtension(MultipartFile file) {
-        return file.getOriginalFilename().substring(file
-                .getOriginalFilename()
-                .lastIndexOf('.'));
+        if (nonNull(file)) {
+            return file.getOriginalFilename().substring(file
+                    .getOriginalFilename()
+                    .lastIndexOf('.'));
+        }
+        return null;
+    }
+
+    public void delete(Image img) throws IOException {
+        if (isNull(img)) {
+            throw new StorageException("file not found in db");
+        }
+        Files.delete(this.rootLocation.resolve(img.getFilename() + img.getExtension()));
     }
 }
