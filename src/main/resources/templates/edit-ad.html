@@ -18,8 +18,7 @@
             <h2 th:if="${isNew} == true" class="m-6">New Property Information</h2>
             <h2 th:if="${isNew} == false" class="m-6">Edit Property Information</h2>
             <div class="row justify-content-center">
-                <form  action="#" th:action="${isNew} == true ? '/addAd': '/editProperty/' + ${property.id}" th:object="${property}" method="POST" class="form col-6">
-<!--                <form th:if="${isNew} == false" action="#" th:action="@{/editProperty/{id} (id = ${property.id})}" th:object="${property}" method="POST" class="form col-6">-->
+                <form action="#" th:action="@{/addAd}" th:object="${property}" method="POST" class="form col-6">
                     <div>
                         <!--Type-->
                         <div class="form-group text-left">
@@ -110,8 +109,7 @@
 
 
                         <div>
-                            <input th:if="${isNew} == true" type="submit" value="Add" class="btn btn-primary">
-                            <input th:if="${isNew} == false" type="submit" value="Edit" class="btn btn-primary">
+                            <input type="submit" value="Add" class="btn btn-primary">
                         </div>
                     </div>
                 </form>

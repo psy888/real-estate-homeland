@@ -6,6 +6,7 @@ import com.psy.realestatehomeland.service.SearchQueryParams;
 import com.psy.realestatehomeland.service.StorageService;
 import com.psy.realestatehomeland.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class PropertyController {
 
     private final PropertyService propertyService;
@@ -81,7 +85,7 @@ public class PropertyController {
 
     @GetMapping("/myAd/{email}")
     public String agentAds(@PathVariable String email, Model model, Principal principal) {
-        if (!principal.getName().contentEquals(email)) {
+        if (isNull(principal)||!principal.getName().contentEquals(email)) {
             //todo check role!!!!!!!!!!!!!!
             return "403";
         }
@@ -90,16 +94,34 @@ public class PropertyController {
 
         setTitle(model, "Agent's Dashboard");
 
-        setUserName(model, principal);
+//        setUserName(model, principal);
 
 
         return "agent-dashboard";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model, Principal principal) {
+//
+//        model.addAttribute("property", new Property());
+//        model.addAttribute("isNew", true);
+//
+//        setTitle(model, "Add Property AD");
+//        setUserName(model, principal);
+        return "admin_page";
+    }
+
+
+    @GetMapping("/403")
+    public String error (){
+        return "403";
+    }
+
     @GetMapping("/addAd")
     public String addAd(Model model, Principal principal) {
 
-        model.addAttribute("newProperty", new Property());
+        model.addAttribute("property", new Property());
+        model.addAttribute("isNew", true);
 
         setTitle(model, "Add Property AD");
         setUserName(model, principal);
@@ -122,9 +144,43 @@ public class PropertyController {
         return "add-photo";
     }
 
+    @GetMapping("/deleteProperty/{id}")
+    public String deleteProperty(@PathVariable String id, Principal principal) {
+        //remove all files
+        propertyService.findById(id).getMainImage().forEach(image -> {
+            try {
+                storageService.delete(image);
+            } catch (IOException e) {
+                log.warn(e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        //remove property entity
+        propertyService.delete(id);
+        return "redirect:/myAd/" + principal.getName();
+    }
+
+    @GetMapping("/editProperty/{id}")
+    public String editProperty(@PathVariable String id, Model model, Principal principal) {
+        Property property = propertyService.findById(id);
+        model.addAttribute("property", property);
+        model.addAttribute("isNew", false);
+        setTitle(model, "Edit Property");
+        setUserName(model, principal);
+        return "add-ad";
+    }
+
+    @PostMapping("/editProperty/{id}")
+    public String editProperty(@PathVariable String id, Property property, Principal principal) {
+
+        propertyService.update(id, property);
+
+        return "redirect:/addimageto?id=" + id;
+    }
+
     @PostMapping("/addAd")
     public String addProperty(Property property, Principal principal) {
-        if(isNull(principal)){
+        if (isNull(principal)) {
             return "index";
         }
         property.setAgent(userService.findUserByEmail(principal.getName()));

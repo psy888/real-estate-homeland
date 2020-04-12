@@ -66,14 +66,12 @@ public class StorageService {
 
             }
             property.getMainImage().add(image);
-
+            propertyService.save(property);
 
         } catch (IOException ioe) {
             imageService.deleteFromDB(image.getFilename());
             log.warn(ioe.getMessage());
             ioe.printStackTrace();
-        } finally {
-            propertyService.update(property);
         }
 
 
@@ -113,7 +111,9 @@ public class StorageService {
     }
 
     private String getExtension(MultipartFile file) {
-        if (nonNull(file)) {
+        if (nonNull(file) && file
+                .getOriginalFilename()
+                .lastIndexOf('.')!=-1) {
             return file.getOriginalFilename().substring(file
                     .getOriginalFilename()
                     .lastIndexOf('.'));

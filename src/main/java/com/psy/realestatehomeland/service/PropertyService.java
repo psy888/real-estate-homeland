@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.nonNull;
+
 @Service
 @RequiredArgsConstructor
 public class PropertyService {
@@ -55,7 +57,20 @@ public class PropertyService {
         return repository.save(property);
     }
 
-    public void update(Property property) {
+    public void save(Property property) {
         repository.save(property);
+    }
+
+    public void update(String id, Property property){
+        Property propertyToUpdate = this.findById(id);
+        if(nonNull(propertyToUpdate)){
+            propertyToUpdate.setIsFeatured(property.getIsFeatured());
+            propertyToUpdate.setIsPromoted(property.getIsPromoted());
+            propertyToUpdate.setPrice(property.getPrice());
+        }
+
+    }
+    public void delete(String id) {
+        repository.deleteById(id);
     }
 }

@@ -28,11 +28,11 @@ public class RealEstateHomelandApplication {
         return args -> {
 
             AppRole admin = new AppRole();
-            admin.setRoleName("ADMINISTRATOR");
+            admin.setRoleName("ROLE_ADMINISTRATOR");
             AppRole agent = new AppRole();
-            agent.setRoleName("AGENT");
+            agent.setRoleName("ROLE_AGENT");
             AppRole client = new AppRole();
-            client.setRoleName("CLIENT");
+            client.setRoleName("ROLE_CLIENT");
 
             appRoleRepository.save(admin);
             appRoleRepository.save(agent);

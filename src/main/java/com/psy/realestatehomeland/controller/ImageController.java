@@ -37,16 +37,19 @@ public class ImageController {
 
     @GetMapping("/deleteImage")
     public String deleteImg(@RequestParam String imgid, @RequestParam String propid) {
+        removeImgTotal(imgid, propid);
+        return "redirect:/addimageto?id=" + propid;
+    }
+
+    private void removeImgTotal(String imgid, String propid){
         try {
             storageService.delete(imageService.findById(imgid));
             Property property = propertyService.findById(propid);
             property.getMainImage().removeIf(image -> image.getFilename().contentEquals(imgid));
-            propertyService.update(property);
-//            imageService.deleteFromDB(imgid);
+            propertyService.save(property);
         } catch (IOException e) {
             log.warn(e.getMessage());
             e.printStackTrace();
         }
-        return "redirect:/addimageto?id=" + propid;
     }
 }
