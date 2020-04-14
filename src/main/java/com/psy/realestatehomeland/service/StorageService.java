@@ -1,7 +1,6 @@
 package com.psy.realestatehomeland.service;
 
 import com.psy.realestatehomeland.model.Image;
-import com.psy.realestatehomeland.model.Property;
 import com.psy.realestatehomeland.storage.StorageException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,43 +34,31 @@ public class StorageService {
      * Store photo to img/property
      *
      * @param file
-     * @param property
      */
-    public void store(MultipartFile file, Property property) {
+    public void store(MultipartFile file, Image image) throws StorageException {
         if (isNull(file)) {
-            throw new StorageException("Error while uploading file.");
+            throw new StorageException("Error while uploading file. file is null");
         }
-        Image image = imageService.addNewPhoto();
-        image.setExtension(getExtension(file));
-//        property.getMainImage().add(image);
-//        image.setProperty(property);
 
-        try {
-            if (!isRightExtension(file)) {
-                throw new StorageException("Wrong file type  " + file.getName());
-            }
-            if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + file.getName());
-            }
-            if (StringUtils.cleanPath(file.getOriginalFilename()).contains("..")) {
-                // This is a security check
-                throw new StorageException(
-                        "Cannot store file with relative path outside current directory "
-                                + file.getName());
-            }
+        if (!isRightExtension(file)) {
+            throw new StorageException("Wrong file type  " + file.getName());
+        }
+        if (file.isEmpty()) {
+            throw new StorageException("Failed to store empty file " + file.getName());
+        }
+        if (StringUtils.cleanPath(file.getOriginalFilename()).contains("..")) {
+            // This is a security check
+            throw new StorageException(
+                    "Cannot store file with relative path outside current directory "
+                            + file.getName());
+        }
 
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(image.getFilename() + getExtension(file)),
-                        StandardCopyOption.REPLACE_EXISTING);
-
-            }
-            property.getMainImage().add(image);
-            propertyService.save(property);
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, this.rootLocation.resolve(image.getFilename() + image.getExtension()),
+                    StandardCopyOption.REPLACE_EXISTING);
 
         } catch (IOException ioe) {
-            imageService.deleteFromDB(image.getFilename());
-            log.warn(ioe.getMessage());
-            ioe.printStackTrace();
+            throw new StorageException("file write error");
         }
 
 
@@ -81,13 +68,13 @@ public class StorageService {
      * Store all non null photos to img/property
      * 0 index - is MAIN PHOTO
      *
-     * @param list
-     * @param property
+     * @param multipartFiles
+     * @param images
      */
-    public void storeAll(ArrayList<MultipartFile> list, Property property) {
-        for (int i = 0; i < list.size(); i++) {
-            if (nonNull(list.get(i)))
-                store(list.get(i), property);
+    public void storeAll(ArrayList<MultipartFile> multipartFiles, ArrayList<Image> images) {
+        for (int i = 0; i < multipartFiles.size(); i++) {
+            if (nonNull(multipartFiles.get(i)))
+                store(multipartFiles.get(i), images.get(i));
         }
     }
 
@@ -113,7 +100,7 @@ public class StorageService {
     private String getExtension(MultipartFile file) {
         if (nonNull(file) && file
                 .getOriginalFilename()
-                .lastIndexOf('.')!=-1) {
+                .lastIndexOf('.') != -1) {
             return file.getOriginalFilename().substring(file
                     .getOriginalFilename()
                     .lastIndexOf('.'));

@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -29,6 +31,7 @@ public class UserService {
                         .encode(user.getPassword()));
         user.setIsEnabled(true);
         ur.setAppUser(user);
+
 
 
         userRepository.save(user);

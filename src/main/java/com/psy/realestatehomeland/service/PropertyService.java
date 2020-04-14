@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
@@ -15,6 +14,7 @@ import static java.util.Objects.nonNull;
 public class PropertyService {
 
     private final PropertyRepository repository;
+
 
     public List<String[]> getCitiesWithCnt() {
         return repository.findAllCities();
@@ -48,7 +48,7 @@ public class PropertyService {
         return repository.findTop9ByIsFeaturedTrue();
     }
 
-    public Property findById(String id){
+    public Property findById(String id) {
         return repository.findById(id).orElse(null); //todo replace to throw
     }
 
@@ -61,15 +61,16 @@ public class PropertyService {
         repository.save(property);
     }
 
-    public void update(String id, Property property){
+    public void update(String id, Property property) {
         Property propertyToUpdate = this.findById(id);
-        if(nonNull(propertyToUpdate)){
+        if (nonNull(propertyToUpdate)) {
             propertyToUpdate.setIsFeatured(property.getIsFeatured());
             propertyToUpdate.setIsPromoted(property.getIsPromoted());
             propertyToUpdate.setPrice(property.getPrice());
         }
 
     }
+
     public void delete(String id) {
         repository.deleteById(id);
     }

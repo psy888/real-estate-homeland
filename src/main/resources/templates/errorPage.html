@@ -489,7 +489,7 @@
 <div class="site-wrap">
 
 
-    <div class="text"><p>403</p></div>
+    <div class="text" th:text="${status}"><p>404</p></div>
     <div class="container">
         <!-- caveman left -->
         <div class="caveman">
@@ -549,8 +549,7 @@
         <div id="link">
             <!--        <i class="fab fa-codepen"></i>-->
             <p>Home Page</p>
-            <h3 th:if="${message != null}" th:utext="${message}" style="color: red;"></h3> 
-            <div th:if="${userInfo != null}" th:utext="${userInfo}"></div>
+            <p th:text="${error-msg}">Home Page</p>
         </div>
     </a>
 

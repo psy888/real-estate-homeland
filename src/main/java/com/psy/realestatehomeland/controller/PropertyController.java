@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,6 +48,8 @@ public class PropertyController {
         return "index";
     }
 
+
+
     @GetMapping("/details/{id}")
     public String details(@PathVariable String id, Model model, Principal principal) {
         model.addAttribute("property", propertyService.getPropertyById(id));
@@ -70,15 +70,14 @@ public class PropertyController {
 
         List<Property> found = propertyService.searchProperty(type, action, city);
 
-        fillSearchForm(model);
-        setTitle(model, "Search");
-
         model.addAttribute("property", found);
 
         //list or grid view
         model.addAttribute("view_type", viewType);
 
         setUserName(model, principal);
+        fillSearchForm(model);
+        setTitle(model, "Search");
 
         return "search-result";
     }
@@ -87,14 +86,14 @@ public class PropertyController {
     public String agentAds(@PathVariable String email, Model model, Principal principal) {
         if (isNull(principal)||!principal.getName().contentEquals(email)) {
             //todo check role!!!!!!!!!!!!!!
-            return "403";
+            return "errorPage";
         }
 
         model.addAttribute("property", propertyService.getPropertyByAgent(principal.getName()));
 
         setTitle(model, "Agent's Dashboard");
 
-//        setUserName(model, principal);
+        setUserName(model, principal);
 
 
         return "agent-dashboard";
@@ -102,20 +101,10 @@ public class PropertyController {
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
-//
-//        model.addAttribute("property", new Property());
-//        model.addAttribute("isNew", true);
-//
-//        setTitle(model, "Add Property AD");
-//        setUserName(model, principal);
+
         return "admin_page";
     }
 
-
-    @GetMapping("/403")
-    public String error (){
-        return "403";
-    }
 
     @GetMapping("/addAd")
     public String addAd(Model model, Principal principal) {
@@ -188,12 +177,8 @@ public class PropertyController {
         return "redirect:/addimageto?id=" + property.getId();
     }
 
-    @PostMapping("/upload")
-    public String uploadPhotos(@RequestParam("id") String id, @RequestParam("file") MultipartFile file, Model model, Principal principal) {
-        storageService.store(file, propertyService.findById(id));
-        return "redirect:/addimageto?id=" + id;
-    }
 
+    //-------------Helper methods-------------------
 
     private void fillSearchForm(Model model) {
         //search form

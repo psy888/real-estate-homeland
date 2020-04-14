@@ -20,8 +20,8 @@
                 <select th:field="*{action}" name="offer-types" id="offer-types"
                         class="form-control d-block rounded-0">
                     <option th:selected="selected" th:value="null">All</option>
-                    <option value="sale">For Sale</option>
-                    <option value="rent">For Rent</option>
+                    <option th:value="sale">For Sale</option>
+                    <option th:value="rent">For Rent</option>
                 </select>
             </div>
         </div>

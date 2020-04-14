@@ -7,7 +7,7 @@
                     <span th:if="${p.getPropertyAction()} == 'sale'" class="offer-type bg-danger">Sale</span>
                     <span th:if="${p.getPropertyAction()} == 'rent'" class="offer-type bg-success">Rent</span>
                 </div>
-                <img th:src="@{/images/property/{filename} (filename = ${p.getMainPhoto()})}" alt="Image" class="img-fluid">
+                <img th:src="@{/images/property/{filename} (filename = (${p.mainImage[0].filename} + ${p.mainImage[0].extension}))}" th:alt="${p.}" class="img-fluid">
             </a>
 
             <div class="p-4 property-body">

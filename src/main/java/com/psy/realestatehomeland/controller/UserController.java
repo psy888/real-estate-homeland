@@ -17,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String login(Model model, Principal principal){
-        if(principal!=null){
+    public String login(Model model, Principal principal) {
+        if (principal != null) {
             model.addAttribute("msg", "Already logged in!");
             return "403Page";
         }
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String register(Model model, Principal principal){
-        if(principal!=null){
+    public String register(Model model, Principal principal) {
+        if (principal != null) {
             model.addAttribute("msg", "Already logged in!");
             return "403Page";
         }
@@ -40,13 +40,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(UserEntity user){
+    public String register(UserEntity user) {
 
         userService.createUser(user);
 
         return "redirect:/login";
     }
-
 
 
 }

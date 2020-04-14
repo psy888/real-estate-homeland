@@ -7,12 +7,16 @@ import com.psy.realestatehomeland.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class ImageController {
     @GetMapping("/images/property/{fileName}")
     public void showImage(@PathVariable String fileName, HttpServletResponse response) {
         response.setContentType("image/jpeg");
-        fileName=fileName.substring(0,fileName.lastIndexOf('.'));
+        fileName = fileName.substring(0, fileName.lastIndexOf('.'));
         try {
             response.getOutputStream().write(imageService.findById(fileName).getPhoto());
         } catch (IOException e) {
@@ -41,7 +45,24 @@ public class ImageController {
         return "redirect:/addimageto?id=" + propid;
     }
 
-    private void removeImgTotal(String imgid, String propid){
+
+    /**
+     * Upload image file and save to local storage
+     *
+     * @param id - property id
+     * @param file - image file
+     * @return to upload form
+     */
+    @PostMapping("/upload")
+    public String uploadPhotos(@RequestParam("id") String id, @RequestParam("file") MultipartFile file, Model model, Principal principal) {
+        imageService.addNewPhoto(file, propertyService.findById(id));
+        return "redirect:/addimageto?id=" + id;
+    }
+
+
+    //-------------Helper methods-------------------
+
+    private void removeImgTotal(String imgid, String propid) {
         try {
             storageService.delete(imageService.findById(imgid));
             Property property = propertyService.findById(propid);
