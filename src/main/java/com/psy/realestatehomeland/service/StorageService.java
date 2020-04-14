@@ -25,7 +25,7 @@ import static java.util.Objects.nonNull;
 public class StorageService {
 
     //    private final Path rootLocation = Paths.get("src/main/resources/static/images/property/");
-    private final Path rootLocation = Paths.get("/tmp/");
+    public static final Path IMG_FOLDER = Paths.get("/tmp/");
     private final ImageService imageService;
     private final PropertyService propertyService;
 
@@ -54,7 +54,7 @@ public class StorageService {
         }
 
         try (InputStream inputStream = file.getInputStream()) {
-            Files.copy(inputStream, this.rootLocation.resolve(image.getFilename() + image.getExtension()),
+            Files.copy(inputStream, IMG_FOLDER.resolve(image.getFilename() + image.getExtension()),
                     StandardCopyOption.REPLACE_EXISTING);
 
         } catch (IOException ioe) {
@@ -112,6 +112,6 @@ public class StorageService {
         if (isNull(img)) {
             throw new StorageException("file not found in db");
         }
-        Files.delete(this.rootLocation.resolve(img.getFilename() + img.getExtension()));
+        Files.delete(this.IMG_FOLDER.resolve(img.getFilename() + img.getExtension()));
     }
 }

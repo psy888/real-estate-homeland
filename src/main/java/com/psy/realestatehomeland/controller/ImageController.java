@@ -32,7 +32,7 @@ public class ImageController {
         response.setContentType("image/jpeg");
         fileName = fileName.substring(0, fileName.lastIndexOf('.'));
         try {
-            response.getOutputStream().write(imageService.findById(fileName).getPhoto());
+            response.getOutputStream().write(imageService.getImageFile(fileName));
         } catch (IOException e) {
             log.warn(e.getMessage());
             e.printStackTrace();

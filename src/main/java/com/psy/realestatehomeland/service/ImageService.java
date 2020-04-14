@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static java.util.Objects.nonNull;
 
 @Service
@@ -54,6 +58,10 @@ public class ImageService {
         return repository.findById(fileName).orElse(noImage);
     }
 
+    public byte[] getImageFile(String filename) throws IOException {
+        Image image = this.findById(filename);
+        return Files.readAllBytes(Paths.get(StorageService.IMG_FOLDER.toString(),image.getFilename() + image.getExtension()));
+    }
 
     /**
      * get uploaded file extension
