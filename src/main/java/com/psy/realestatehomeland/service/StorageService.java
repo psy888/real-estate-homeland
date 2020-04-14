@@ -26,8 +26,6 @@ public class StorageService {
 
     //    private final Path rootLocation = Paths.get("src/main/resources/static/images/property/");
     public static final Path IMG_FOLDER = Paths.get("/tmp/");
-    private final ImageService imageService;
-    private final PropertyService propertyService;
 
     /**
      * get file name from Photo.id field

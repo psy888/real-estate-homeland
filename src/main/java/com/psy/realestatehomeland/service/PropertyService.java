@@ -96,6 +96,7 @@ public class PropertyService {
             propertyToUpdate.setBedroomCnt(property.getBedroomCnt());
             propertyToUpdate.setDescription(property.getDescription());
             propertyToUpdate.setPropertyAction(property.getPropertyAction());
+            repository.save(propertyToUpdate);
         }
 
     }

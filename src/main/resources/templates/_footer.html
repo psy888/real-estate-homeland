@@ -1,12 +1,10 @@
-<footer  class="site-footer"  xmlns:th="http://www.thymeleaf.org">
+<footer class="site-footer" xmlns:th="http://www.thymeleaf.org">
     <div class="container">
         <div class="row">
             <div class="col-lg-4">
                 <div class="mb-5">
                     <h3 class="footer-heading mb-4">About Homeland</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe pariatur reprehenderit vero
-                        atque, consequatur id ratione, et non dignissimos culpa? Ut veritatis, quos illum totam quis
-                        blanditiis, minima minus odio!</p>
+                    <p>...</p>
                 </div>
 
 
@@ -18,18 +16,25 @@
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <ul class="list-unstyled">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Buy</a></li>
-                            <li><a href="#">Rent</a></li>
-                            <li><a href="#">Properties</a></li>
+                            <li>
+                                <a th:href="@{/}">Home</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/search}">Search</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <ul class="list-unstyled">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Terms</a></li>
+                            <div th:if="${#request.userPrincipal != null}">
+                                <li><a th:href="@{/userPage/{n} (n=${#request.userPrincipal.name})}">User page</a></li>
+                                <li><a th:href="@{/myAd/{n} (n=${#request.userPrincipal.name}) }">Dashboard</a></li>
+                                <li><a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a></li>
+                            </div>
+                            <li>
+                                <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Login/Register</a>
+
+                            </li>
                         </ul>
                     </div>
                 </div>

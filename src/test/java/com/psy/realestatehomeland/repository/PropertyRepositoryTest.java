@@ -1,7 +1,6 @@
 package com.psy.realestatehomeland.repository;
 
 import com.psy.realestatehomeland.model.Property;
-import com.psy.realestatehomeland.model.lib.PropertyType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

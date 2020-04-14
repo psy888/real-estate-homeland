@@ -43,9 +43,6 @@ public class Property {
     private Double price;
 
 
-    @Column(name = "rental_price_type")
-    private Integer priceType;
-
     //    @NotNull
     @Column(name = "currency_code")
     private String currencyCode;

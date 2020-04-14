@@ -49,10 +49,9 @@ public class PropertyController {
     }
 
 
-
     @GetMapping("/details/{id}")
     public String details(@PathVariable String id, Model model, Principal principal) {
-        model.addAttribute("property", propertyService.getPropertyById(id));
+        model.addAttribute("property", propertyService.findById(id));
 
         setTitle(model, "Details");
         setUserName(model, principal);
@@ -84,17 +83,14 @@ public class PropertyController {
 
     @GetMapping("/myAd/{email}")
     public String agentAds(@PathVariable String email, Model model, Principal principal) {
-        if (isNull(principal)||!principal.getName().contentEquals(email)) {
+        if (isNull(principal) || !principal.getName().contentEquals(email)) {
             //todo check role!!!!!!!!!!!!!!
             return "errorPage";
         }
 
         model.addAttribute("property", propertyService.getPropertyByAgent(principal.getName()));
-
         setTitle(model, "Agent's Dashboard");
-
         setUserName(model, principal);
-
 
         return "agent-dashboard";
     }
