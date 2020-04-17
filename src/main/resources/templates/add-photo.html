@@ -22,7 +22,7 @@
                       enctype="multipart/form-data" class="form col-6">
                     <div>
                         <div th:if="${imageCnt<10}" class="form-group text-left">
-                            <label th:if="${imageCnt == 0}" th:text="'Main image min size( 1223x600 px) #' + ${imageCnt + 1}"></label>
+                            <label th:if="${imageCnt == 0}" th:text="'Main image min size( add-ad.html1223x600 px) #' + ${imageCnt + 1}"></label>
                             <label th:text="'Select image #' + ${imageCnt + 1}"></label>
                             <input type="file" th:id="'f'" th:name="'file'"/>
                             <input type="submit" value="Add" class="btn btn-primary float-right">

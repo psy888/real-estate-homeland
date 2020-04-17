@@ -2,37 +2,38 @@
     <div class="col-md-12">
         <div class="property-entry horizontal d-lg-flex">
 
-            <a th:href="@{/details/{id} (id = ${p.getId()})}"  class="property-thumbnail h-100">
+            <a th:href="@{/details/{id} (id = ${p.id})}"  class="property-thumbnail h-100">
                 <div class="offer-type-wrap">
                     <span th:if="${p.getPropertyAction()} == 'sale'" class="offer-type bg-danger">Sale</span>
                     <span th:if="${p.getPropertyAction()} == 'rent'" class="offer-type bg-success">Rent</span>
                 </div>
-                <img th:src="@{/images/property/{filename} (filename = (${p.mainImage[0].filename} + ${p.mainImage[0].extension}))}" th:alt="${p.}" class="img-fluid">
+                <img th:src="@{/images/property/{filename} (filename = (${p.mainImage[0].filename} + ${p.mainImage[0].extension}))}" th:alt="${p.address}"
+                     class="img-fluid">
             </a>
 
             <div class="p-4 property-body">
                 <a href="#" class="property-favorite active"><span class="icon-heart-o"></span></a>
                 <h2 class="property-title"><a th:href="@{/details/{id} (id = ${p.getId()})}"
-                                              th:text="${p.getAddress()}">Address</a></h2>
-                <span th:text="${p.getCity()}" class="property-location d-block mb-3"><span
+                                              th:text="${p.address}">Address</a></h2>
+                <span th:text="${p.city}" class="property-location d-block mb-3"><span
                         class="property-icon icon-room"></span>City</span>
-                <strong th:text="${p.getPrice() + ' ' + p.getCurrencyCode()}"
+                <strong th:text="${p.price + ' ' + p.currencyCode}"
                         class="property-price text-primary mb-3 d-block text-success">$2,265,500</strong>
-                <p th:text="${p.getDescription()}" style="'text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'">Description</p>
+                <p th:text="${p.description}" style="'text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'">Description</p>
                 <ul class="property-specs-wrap mb-3 mb-lg-0">
                     <li>
                         <span class="property-specs">Beds</span>
-                        <span th:text="${p.getBedroomCnt()}" class="property-specs-number"></span>
+                        <span th:text="${p.bedroomCnt}" class="property-specs-number"></span>
 
                     </li>
                     <li>
                         <span class="property-specs">Baths</span>
-                        <span th:text="${p.getBathroomCnt()}" class="property-specs-number"></span>
+                        <span th:text="${p.bathroomCnt}" class="property-specs-number"></span>
 
                     </li>
                     <li>
                         <span class="property-specs">SQ FT</span>
-                        <span th:text="${p.getArea()}" class="property-specs-number"></span>
+                        <span th:text="${p.area}" class="property-specs-number"></span>
 
                     </li>
                 </ul>

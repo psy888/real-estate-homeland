@@ -95,11 +95,7 @@ public class PropertyController {
         return "agent-dashboard";
     }
 
-    @GetMapping("/admin")
-    public String admin(Model model, Principal principal) {
 
-        return "admin_page";
-    }
 
 
     @GetMapping("/addAd")

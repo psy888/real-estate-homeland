@@ -1,28 +1,27 @@
 package com.psy.realestatehomeland.model.user;
 
 import lombok.Data;
-import lombok.Generated;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
-@Table(name = "user",schema = "sc",uniqueConstraints = { //
-        @UniqueConstraint(name = "USER_EMAIL_UK", columnNames = "email") })
+@Table(name = "user", schema = "sc", uniqueConstraints = { //
+        @UniqueConstraint(name = "USER_EMAIL_UK", columnNames = "email")})
 public class UserEntity implements User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "uuid2userGen" )
+    @GeneratedValue(generator = "uuid2userGen")
     @GenericGenerator(name = "uuid2userGen", strategy = "uuid2")
     private String id;
 
     @NotNull
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -43,9 +42,6 @@ public class UserEntity implements User {
 
     @Column(name = "enabled")
     private Boolean isEnabled;
-
-//    @Column(name = "user_role")
-//    private UserRole role;
 
     @Transient
     private String role;

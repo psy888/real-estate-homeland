@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_head"></head>
+<body class="text-center">
+
+<div class="site-loader"></div>
+<div class="site-wrap">
+    <div th:replace="/_agent-top-nav"></div>
+
+    <div class="site-section site-section-sm bg-dark pb-0 ">
+        <div class="site-section site-section-title pb-1 ">
+        </div>
+    </div>
+
+    <div class="site-section site-section-sm pb-2">
+
+        <div class="container">
+            <!--            ADMINS          -->
+            <h2 th:if="${admins eq null}" class="m-2">No admins registered yet!</h2>
+            <div th:if="${admins ne null}"  class="row justify-content-center">
+                <h2 class="m-6">List of admins</h2>
+                <table class="table text-left">
+                    <thead class="thead-light col-6">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Is Enabled</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user, iter : ${admins}">
+                        <td th:text="${iter.count}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:if="${user.isEnabled == true}"><a th:href="@{/disableUser/{id} (id=${user.id})}" >Disable</a></td>
+                        <td th:if="${user.isEnabled != true}"><a th:href="@{/enableUser/{id} (id=${user.id})}" >Enable</a></td>
+                        <td><a th:href="@{/deleteUser/{id} (id=${user.id})}">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--            AGENTS          -->
+            <h2 th:if="${agents eq null}" class="m-2">No agents registered yet!</h2>
+            <div th:if="${agents ne null}"  class="row justify-content-center">
+                <h2 class="m-6">List of agents</h2>
+                <table class="table text-left">
+                    <thead class="thead-light col-6">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Is Enabled</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user, iter : ${agents}">
+                        <td th:text="${iter.count}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:if="${user.isEnabled == true}"><a th:href="@{/disableUser/{id} (id=${user.id})}" >Disable</a></td>
+                        <td th:if="${user.isEnabled != true}"><a th:href="@{/enableUser/{id} (id=${user.id})}" >Enable</a></td>
+                        <td><a th:href="@{/deleteUser/{id} (id=${user.id})}">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--            CLIENTS         -->
+            <h2 th:if="${clients eq null}" class="m-2">No clients registered yet!</h2>
+            <div th:if="${clients ne null}"  class="row justify-content-center">
+                <h2 class="m-6">List of clients</h2>
+                <table class="table text-left">
+                    <thead class="thead-light col-6">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Is Enabled</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user, iter : ${clients}">
+                        <td th:text="${iter.count}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:if="${user.isEnabled == true}"><a th:href="@{/disableUser/{id} (id=${user.id})}" >Disable</a></td>
+                        <td th:if="${user.isEnabled != true}"><a th:href="@{/enableUser/{id} (id=${user.id})}" >Enable</a></td>
+                        <td><a th:href="@{/deleteUser/{id} (id=${user.id})}">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <footer th:replace="_footer"></footer>
+</div>
+
+<div th:replace="_scripts"></div>
+
+
+</body>
+</html>

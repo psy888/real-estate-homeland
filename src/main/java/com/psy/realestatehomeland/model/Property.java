@@ -69,6 +69,7 @@ public class Property {
     private Boolean isPromoted;
 
     @OneToMany
+    @JoinTable(name = "images", schema = "sc")
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<Image> mainImage;
 

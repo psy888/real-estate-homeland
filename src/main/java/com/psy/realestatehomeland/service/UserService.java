@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +35,20 @@ public class UserService {
         ur.setAppUser(user);
 
 
-
         userRepository.save(user);
         userRoleRepository.save(ur);
     }
 
     public UserEntity findUserByEmail(String email) {
         return userRepository.getUserEntityByEmail(email).orElse(null);
+    }
+
+    public List<UserEntity> findAllByRole(String role) {
+        Optional<AppRole> currentRole = appRoleRepository.findByRoleName(role);
+        if (currentRole.isPresent()) {
+            List<UserEntity> users = userRoleRepository.findAllByAppRole(currentRole.get()).stream().map(UserRole::getAppUser).collect(Collectors.toList());
+            return (users.isEmpty()) ? null : users;
+        }
+        return null;
     }
 }

@@ -48,4 +48,15 @@ public class UserController {
     }
 
 
+    @GetMapping("/admin")
+    public String admin(Model model, Principal principal) {
+
+        model.addAttribute("clients", userService.findAllByRole("ROLE_CLIENT"));
+        model.addAttribute("agents", userService.findAllByRole("ROLE_AGENT"));
+        model.addAttribute("admins", userService.findAllByRole("ROLE_ADMINISTRATOR"));
+        model.addAttribute("title", "Admin page");
+
+        return "admin-dashboard";
+    }
+
 }

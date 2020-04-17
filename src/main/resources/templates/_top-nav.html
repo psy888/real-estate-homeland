@@ -29,6 +29,9 @@
                             <li th:classappend="(${title} == 'Search')?'active':''">
                                 <a th:href="@{/search}">Search</a>
                             </li>
+                            <li th:classappend="(${title} == 'Admin page')?'active':''">
+                                <a th:href="@{/search}">Admin page</a>
+                            </li>
                             <li th:if="${#request.userPrincipal != null}" class="has-children">
                                 <a th:href="@{/userPage/{n} (n=${name})}"  th:text="${name}">User name if logged in</a>
                                 <ul class="dropdown arrow-top">
